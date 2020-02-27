@@ -24,6 +24,9 @@ $currentId = $_SESSION['current_Id'];
 $curentPseudo = $_SESSION['current_Pseudo'];
 // on détruit les variables d erreur de login de notre session
 unset ($_SESSION['showErrorSignup'], $_SESSION['errorMsgSignUp']);
+// on détruit les variables d erreur d action de la page admin_news.php
+unset ($_SESSION['showErrorAction'], $_SESSION['errorMsgAction']);
+unset ($_SESSION['showErrorCreate'], $_SESSION['errorMsgCreate']);
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------
@@ -59,11 +62,11 @@ unset ($_SESSION['showErrorSignup'], $_SESSION['errorMsgSignUp']);
                             debut du container pour afficher le newsfeed
         ------------------------------------------------------------------------------------------>           
         <div class="mt-5 container">            
-            <!-- bouton qui dirige vers le formulaire admin pour creer une actualite -->
+            <!-- bouton qui dirige vers le formulaire admin pour gerer ses actualites -->
             <div class="my-5 mx-auto <?=($_SESSION['current_Role'] == 'Admin') ? 'visible ' : 'invisible ' ?>">
                 <a class="btn btn-danger btn-lg btn-block" href="/admin_page/admin_news.php">- Administrer vos actualités -</a>
             </div> 
-            <!-- /bouton qui dirige vers le formulaire admin pour creer une actualite -->       
+            <!-- /bouton qui dirige vers le formulaire admin pour gere ses actualites -->       
            
             <!---------------------------------//-----------------------------------------
                     debut script php pour recuperer toutes les actualites
@@ -79,11 +82,13 @@ unset ($_SESSION['showErrorSignup'], $_SESSION['errorMsgSignUp']);
                     if ($newsFeedList) {
                     // boucle pour afficher les differentes news
                     foreach ($newsFeedList as $myNews => $column) {
+                        // on verifie s il y a une image sinon on affiche celle par defaut
+                        $newPicture = (($newsFeedList[$myNews]['picture']) == '') ? 'empty_picture.jpg' : $newsFeedList[$myNews]['picture'];
                 ?>
                 <!-- on recupere les valeurs des differents champs d une ligne -->             
                 <div class="col-sm-5 card border-primary mb-5 py-3">
                     <!-- photo de l actualite -->
-                    <img class="card-img-top news-picture mx-auto" src="/img/news_feeds_pictures/<?=$newsFeedList[$myNews]['picture']; ?>" alt="first news picture">
+                    <img class="card-img-top news-picture mx-auto" src="/img/news_feeds_pictures/<?=$newPicture ?>" alt="first news picture">
                     <!-- /photo de l actualite -->
                     <!-- titre de l actualite et resume -->
                     <div class="card-body">
@@ -92,7 +97,7 @@ unset ($_SESSION['showErrorSignup'], $_SESSION['errorMsgSignUp']);
                     </div>
                     <!-- /titre de l actualite et resume -->
                     <!-- bouton pour afficher les details de l actualite --> 
-                        <a class ="btn btn-primary"href="news_detail.php?newsId=<?=$newsFeedList[$myNews]['aticleId']; ?>">Voir</a>
+                        <a class ="btn btn-primary visitedNews"href="news_detail.php?newsId=<?=$newsFeedList[$myNews]['aticleId']; ?>">Voir</a>
                     <!-- /bouton pour afficher les details de l actualite --> 
                 </div>
                 <?php

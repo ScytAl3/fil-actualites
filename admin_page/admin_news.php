@@ -18,8 +18,9 @@ $currentRole = $_SESSION['current_Role'];
 $currentId = $_SESSION['current_Id'];
 // pseudo de l utilisateur connecte
 $curentPseudo = $_SESSION['current_Pseudo'];
-// on détruit les variables d erreur de login de notre session
-unset ($_SESSION['showErrorSignup'], $_SESSION['errorMsgSignUp']);
+// message d erreur des actions
+$_SESSION['showErrorAction']  = (isset($_SESSION['showErrorAction'])) ? $_SESSION['showErrorAction'] : false;
+$_SESSION['errorMsgAction']  =  (isset($_SESSION['errorMsgAction'])) ? $_SESSION['errorMsgAction'] : '';
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------
@@ -61,8 +62,19 @@ unset ($_SESSION['showErrorSignup'], $_SESSION['errorMsgSignUp']);
                     <h2 class="card-title">Gestion des actualités postées par l'adminstrateur <strong><em><?=$curentPseudo ?></em></strong></h2>
                 </div>
             </div> 
-            <!-- /message a l attention de l administrateur connecte -->  
+            <!-- /message a l attention de l administrateur connecte --> 
+            <hr>
+            <!-- area pour afficher un message d erreur lors de la creation -->
+            <div class="show-bg <?=($_SESSION['showErrorAction']) ? '' : 'visible'; ?> text-center mt-5">
+                <p class="lead mt-2"><span><?=$_SESSION['errorMsgAction']; ?></span></p>
+            </div>
+            <!-- /area pour afficher un message d erreur lors de la creation -->
            
+           <!-- bouton qui dirige vers le formulaire admin pour creer une actualite -->
+            <div class="my-5 mx-auto">
+                <a class="btn btn-success btn-lg btn-block" href="/admin_page/admin_news_create.php">- Ajouter une actualité -</a>
+            </div> 
+            <!-- /bouton qui dirige vers le formulaire admin pour creer une actualite -->
             <!---------------------------------//-----------------------------------------
                     debut script php pour recuperer toutes les actualites
             ------------------------------------------------------------------------------>
@@ -87,10 +99,10 @@ unset ($_SESSION['showErrorSignup'], $_SESSION['errorMsgSignUp']);
                                 </div>
                                 <!-- boutons pour modifier ou supprimer une actualite --> 
                                 <div class="d-flex ml-auto align-self-center">
-                                    <a class="btn btn-primary" href="admin_news_form.php?aticleId=<?=$myNewsFeed[$myNews]['aticleId'] ?>">Edit</a>
-                                    <form method="post" action="/forms_processing/admin_delete_news_process.php" onsubmit=" return confirm('are you really sure')">
+                                    <a class="btn btn-primary" href="admin_news_edit.php?articleId=<?=$myNewsFeed[$myNews]['articleId'] ?>">Edit</a>
+                                    <form method="post" action="/forms_processing/admin_news_delete_process.php" onsubmit=" return confirm('are you really sure')">
                                         <!-- on associe l article et la value pour les passer en hidden en POST -->
-                                        <input name="aticleId" type="hidden" value="<?=$myNewsFeed[$myNews]['aticleId'] ?>">
+                                        <input name="articleId" type="hidden" value="<?=$myNewsFeed[$myNews]['articleId'] ?>">
                                         <button class="btn btn-danger ml-1">Delete</button>
                                     </form>
                                 </div>
@@ -98,7 +110,7 @@ unset ($_SESSION['showErrorSignup'], $_SESSION['errorMsgSignUp']);
                             </div>                            
                         </div>
                     </div>                 
-                <!-- on recupere les informations pour chaque actualite -->    
+                <!-- /on recupere les informations pour chaque actualite -->    
                 <?php
                 } 
                 // si la requete ne retourne rien

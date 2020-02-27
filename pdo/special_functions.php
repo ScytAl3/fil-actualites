@@ -53,7 +53,7 @@ function UploadImage($image) {
     // on initialise le tableau des erreurs
     $errors= array();
     // initialisation des variables avec les informations du fichier uploade
-    $target_dir = "../img/profil_pictures/";
+    $target_dir = "../img/news_feeds_pictures/";
     $target_file = $target_dir . basename($image["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));

@@ -12,3 +12,7 @@
     font-size: 1.1em;
     color: black;
 }
+
+.visitedNews:visited {
+    background-color: #ccc;
+}

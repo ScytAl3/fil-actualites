@@ -17,6 +17,9 @@ $_SESSION['current_Id'] = (isset($_SESSION['current_Id'])) ? $_SESSION['current_
 // message d erreur de login
 $_SESSION['showErrorLog']  = (isset($_SESSION['showErrorLog'])) ? $_SESSION['showErrorLog'] : false;
 $_SESSION['errorMsgLog']  =  (isset($_SESSION['errorMsgLog'])) ? $_SESSION['errorMsgLog'] : '';
+// on détruit les variables d erreur d action de la page admin
+unset ($_SESSION['showErrorAction'], $_SESSION['errorMsgAction']);
+unset ($_SESSION['showErrorCreate'], $_SESSION['errorMsgCreate']);
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------

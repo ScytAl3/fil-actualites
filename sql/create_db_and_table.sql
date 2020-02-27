@@ -33,7 +33,7 @@ CREATE TABLE articles (
     articlesId                       int                        not null Auto_increment,
     articleUserId               int                            not null,
     articlesTitle                   varchar(255)        not null,
-    articlesDescription        varchar(2550)       not null,
+    articlesDescription        varchar(255)       not null,
     articlesBody                  longtext                  not null,
     created_at                       datetime               not null,
     updated_at                       datetime                   null  ,
@@ -48,7 +48,7 @@ CREATE TABLE articles (
 CREATE TABLE pictures (
     picturesId                   int                    not null  Auto_increment,
     articlesId                    int                    not null,    
-    pictureFilename         varchar(100)    not null,
+    pictureFilename         varchar(100)    ,
     CONSTRAINT pictures_PK PRIMARY KEY (picturesId),
     FOREIGN KEY (articlesId) REFERENCES articles(articlesId)
 ) ENGINE=InnoDB;
@@ -92,12 +92,12 @@ INSERT INTO
 VALUES
     (1, 'celebration_01.jpg'),
     (1, 'celebration_02.jpg'),
-    (2, 'empty_picture.jpg'),
-    (3, 'empty_picture.jpg'),
+    (2, ''),
+    (3, ''),
     (4, 'concert_01.jpg'),
     (4, 'concert_02.jpg'),
     (4, 'concert_03.jpg'),
-    (5, 'empty_picture.jpg'),
+    (5, ''),
     (6, 'seminar_01.jpg'),
     (6, 'seminar_02.jpg'),
-    (7, 'empty_picture.jpg');
+    (7, '');

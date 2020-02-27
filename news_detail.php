@@ -94,9 +94,11 @@ $curentPseudo = $_SESSION['current_Pseudo'];
                                     //var_dump($newsPictures); die;
                                     //
                                     foreach ($newsPictures as $slide => $filename) {
+                                        // on verifie s il y a une image sinon on affiche celle par defaut
+                                        $pictureSlide = (($newsPictures[$slide]['picture']) == '') ? 'empty_picture.jpg' : $newsPictures[$slide]['picture'];
                                 ?>
                                 <div class="carousel-item <?=(!$slide) ? 'active' : '' ?>">
-                                    <img class="d-block w-100" src="/img/news_feeds_pictures/<?=$newsPictures[$slide]['picture'] ?>" alt="slide">
+                                    <img class="d-block w-100" src="/img/news_feeds_pictures/<?=$pictureSlide ?>" alt="slide">
                                 </div>    
                                 <?php
                                 }
