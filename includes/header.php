@@ -10,8 +10,11 @@
             <div class="d-flex flex-column">
                 <h1 class="align-self-center"><strong>MY NEWS FEEDS</strong></h1>
                 <div>
-                    <ul class="navbar-nav <?=($_SESSION['current_Session']) ? 'visible ' : 'invisible ' ?>">
+                    <ul class="navbar-nav">
                         <li class="nav-item active">
+                            <a class="nav-link" href="/index.php">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active <?=($_SESSION['current_Session']) ? 'visible ' : 'invisible ' ?>">
                             <a class="nav-link" href="/news_feed.php">Le fil</a>
                         </li>
                         <li class="nav-item active <?=($_SESSION['current_Role'] == 'Admin') ? 'visible ' : 'invisible ' ?>">

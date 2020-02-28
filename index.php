@@ -14,10 +14,17 @@ $_SESSION['current_Pseudo']  =  (isset($_SESSION['current_Pseudo'])) ? $_SESSION
 $_SESSION['current_Role'] = (isset($_SESSION['current_Role'])) ? $_SESSION['current_Role'] : 'Default';
 // identifiant de l admin
 $_SESSION['current_Id'] = (isset($_SESSION['current_Id'])) ? $_SESSION['current_Id'] : false;
-// message d erreur de login
-$_SESSION['showErrorLog']  = (isset($_SESSION['showErrorLog'])) ? $_SESSION['showErrorLog'] : false;
-$_SESSION['errorMsgLog']  =  (isset($_SESSION['errorMsgLog'])) ? $_SESSION['errorMsgLog'] : '';
-// on détruit les variables d erreur d action de la page admin
+// ------------------//------------------------
+//      messages d erreur de login
+$_SESSION['error']['page'] = (isset($_SESSION['error']['page'])) ? $_SESSION['error']['page'] : 'login';
+$_SESSION['error']['show'] = ((isset($_SESSION['error']['show'])) && ($_SESSION['error']['page'] =='login')) ? $_SESSION['error']['show'] : false;
+$_SESSION['error']['message'] = ((isset($_SESSION['error']['message'])) && ($_SESSION['error']['page'] =='login')) ? $_SESSION['error']['message'] :  '';
+$_SESSION['error']['page'] = 'login';
+
+//     messages d erreur de login
+// ------------------//------------------------
+// on détruit les variables inutiles des autres pages
+unset($_SESSION['signupForm']);
 unset ($_SESSION['showErrorAction'], $_SESSION['errorMsgAction']);
 unset ($_SESSION['showErrorCreate'], $_SESSION['errorMsgCreate']);
 // ----------------------------------------------------------
@@ -76,8 +83,8 @@ unset ($_SESSION['showErrorCreate'], $_SESSION['errorMsgCreate']);
                         <div class="text-center mx-auto">
                             <h2 class="display-4 font-weight-bold text-muted">Accéder aux actualités</h2>                       
                             <!-- area pour afficher un message d erreur lors d un mauvais login : pseudo inexistant ou erreud password -->
-                            <div class="show-bg<?= ($_SESSION['showErrorLog'])? '' : 'visible'; ?> text-center mt-5">
-                                <p class="lead mt-2"><span><?= $_SESSION['errorMsgLog']; ?></span></p>
+                            <div class="show-bg<?=($_SESSION['error']['show']) ? '' : 'visible'; ?> text-center mt-5">
+                                <p class="lead mt-2"><span><?=$_SESSION['error']['message'] ?></span></p>
                             </div>
                             <!-- /area pour afficher un message d erreur lors du login : pseudo inexistant ou erreud password -->
                         </div>

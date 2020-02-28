@@ -4,83 +4,49 @@ require 'pdo_db_connect.php';
 // -- import du script des fonctions speciales
 require 'special_functions.php';
 
-// ---------------------------------------------//-----------------------------------------
-//      fonction pour verifier l existence du pseudo qui doit être unique
-// ---------------------------------------------//-----------------------------------------
-function pseudoExiste($pseudoToTest) {
-    // on instancie une connexion
-    $pdo = my_pdo_connexxion();
-    // preparation de la  requete preparee pour verifier si l adresse email (email unique) est deja utilisee
-    $query = "SELECT * FROM users WHERE userPseudo = :bp_pseudo";
-    // preparation de l execution de la requete
-    try {
-        $statement = $pdo -> prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-        // passage de l email saisi en  parametre
-        $statement->bindParam(':bp_pseudo', $pseudoToTest, PDO::PARAM_STR);
-        // execution de la requete
-        $statement -> execute(); 
-        $user_count = $statement->rowCount();       
-        // --------------------------------------------------------------
-        //var_dump($user_row = $statement->fetch()); die; 
-        // --------------------------------------------------------------
-        // si on trouve un resultat
-        if ($user_count == 1) {
-            // on recupere les donnees trouvees dans 
-            $user_row = $statement->fetch();
-        } else {
-            $user_row = false;
-        }         
-        $statement -> closeCursor();
-    } catch(PDOException $ex) {         
-        $statement = null;
-        $pdo = null;
-        $msg = 'ERREUR PDO check pseudo...' . $ex->getMessage();
-        die($msg); 
-    }
-    $statement = null;
-    $pdo = null;
-    // on retourne le resultat
-    return $user_row; 
-}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                      Les Fonctions utilisateurs                                      //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ---------------------------------------------//-----------------------------------------
-//      fonction pour verifier l existence du email qui doit être unique !! TO-DO une fonction qui prend en parametre le where pour ne pas faire doublon !!
+//      fonction pour verifier l existence d un champ dans la table users
 // ---------------------------------------------//-----------------------------------------
-function emailExiste($emailToTest) {
+function userExist($where, $valueToTest) {
     // on instancie une connexion
     $pdo = my_pdo_connexxion();
-    // preparation de la  requete preparee pour verifier si l adresse email (email unique) est deja utilisee
-    $query = "SELECT * FROM users WHERE userEmail = :bp_email";
+    // preparation de la  requete preparee pour verifier si la condition testee renvoie un resultat
+    $query = "SELECT * FROM users WHERE $where = :bp_pseudo";
     // preparation de l execution de la requete
     try {
         $statement = $pdo -> prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-        // passage de l email saisi en  parametre
-        $statement->bindParam(':bp_email', $emailToTest, PDO::PARAM_STR);
+        // passage de la valeur a tester en  parametre
+        $statement->bindParam(':bp_pseudo', $valueToTest, PDO::PARAM_STR);
         // execution de la requete
         $statement -> execute(); 
-        $user_count = $statement->rowCount();       
+        $count = $statement->rowCount();       
         // --------------------------------------------------------------
-        //var_dump($user_row = $statement->fetch()); die; 
+        //var_dump($count = $statement->fetch()); die; 
         // --------------------------------------------------------------
         // si on trouve un resultat
-        if ($user_count == 1) {
-            // on recupere les donnees trouvees dans 
-            $user_row = $statement->fetch();
+        if ($count == 1) {
+            // on recupere les donnees qui sont associees a l utilisateur 
+            $userExist= $statement->fetch(); 
         } else {
-            $user_row = false;
+            $userExist = false;
         }         
         $statement -> closeCursor();
     } catch(PDOException $ex) {         
         $statement = null;
         $pdo = null;
-        $msg = 'ERREUR PDO check email...' . $ex->getMessage();
+        $msg = 'ERREUR PDO Check User Exist...' . $ex->getMessage();
         die($msg); 
     }
     $statement = null;
     $pdo = null;
     // on retourne le resultat
-    return $user_row; 
+    return $userExist; 
 }
+
 // ------------------------------------------------------------
 //           fonction pour verifier le mot de passe
 // ------------------------------------------------------------
@@ -126,6 +92,10 @@ function createUser($userData) {
     // on retourne le dernier Id cree
     return $pdo -> lastInsertId(); 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                      Les Fonctions newsfeed                                        //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ----------------------------------------------------------------------
 //      fonction pour renvoyer la liste des actualites
@@ -283,6 +253,10 @@ function newsPictureReader($newsId) {
     // on retourne le resultat
     return $myReader; 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                      Les Fonctions Administrateur                               //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // -------------------------------------------------------------------------------
 //      fonction pour renvoyer la liste des actualites d un admin

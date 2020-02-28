@@ -10,11 +10,13 @@ require '../pdo/pdo_db_functions.php';
 // ----------------------------//---------------------------
 //                  variables de session
 // ---------------------------------------------------------
-// message d erreur de creation
-$_SESSION['showErrorUpdate']  = (isset($_SESSION['showErrorUpdate'])) ? $_SESSION['showErrorUpdate'] : false;
-$_SESSION['errorMsgUpdate']  =  (isset($_SESSION['errorMsgUpdate'])) ? $_SESSION['errorMsgUpdate'] :'';
-// on détruit les variables d erreur d action de la page admin_news.php
-unset ($_SESSION['showErrorAction'], $_SESSION['errorMsgAction']);
+// ----------------------//------------------------
+//      messages d erreur admin news list
+$_SESSION['error']['show'] = ($_SESSION['error']['page'] != 'adminNewsUpdate') ? false : $_SESSION['error']['show'];
+$_SESSION['error']['message'] =  ($_SESSION['error']['page'] != 'adminNewsUpdate') ? '' : $_SESSION['error']['message'];
+$_SESSION['error']['page'] = 'adminNewsUpdate';
+//     messages d erreur admin news list
+// ----------------------//------------------------
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------
@@ -54,8 +56,8 @@ unset ($_SESSION['showErrorAction'], $_SESSION['errorMsgAction']);
 				<div class="py-2 text-center">
 					<h1><strong>Mise à jour d'une actualité</strong></h1>
 					<!-- area pour afficher un message d erreur lors de la creation -->
-					<div class="show-bg <?=($_SESSION['showErrorUpdate']) ? '' : 'visible'; ?> text-center mt-5">
-						<p class="lead mt-2"><span><?=$_SESSION['errorMsgUpdate']; ?></span></p>
+					<div class="show-bg <?=($_SESSION['error']['show']) ? '' : 'visible'; ?> text-center mt-5">
+						<p class="lead mt-2"><span><?=$_SESSION['error']['message'] ?></span></p>
 					</div>
 					<!-- /area pour afficher un message d erreur lors de la creation -->
 					<hr class="mb-1">

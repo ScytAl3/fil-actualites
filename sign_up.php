@@ -6,16 +6,18 @@ require 'pdo/pdo_db_functions.php';
 // ----------------------------//---------------------------
 //                  variables de session
 // ---------------------------------------------------------
-// message d erreur de creation
-$_SESSION['showErrorSignup']  = (isset($_SESSION['showErrorSignup'])) ? $_SESSION['showErrorSignup'] : false;
-$_SESSION['errorMsgSignUp']  =  (isset($_SESSION['errorMsgSignUp'])) ? $_SESSION['errorMsgSignUp'] :'';
-// on détruit les variables d erreur de login de notre session
-unset ($_SESSION['showErrorLog'], $_SESSION['errorMsgLog']);
+// ------------------//------------------------
+//      messages d erreur sign up
+$_SESSION['error']['show']  = ($_SESSION['error']['page'] != 'signup') ? false : $_SESSION['error']['show'];
+$_SESSION['error']['message']  =  ($_SESSION['error']['page'] != 'signup') ? '' : $_SESSION['error']['message'];
+$_SESSION['error']['page'] = 'signup';
+//     messages d erreur sign up
+// ------------------//------------------------
 // recuperation des champs si le formulaire a ete envoye avec des erreurs
-$userLastName = (isset($_SESSION['inputLastName'])) ? $_SESSION['inputLastName'] : '';
-$userFirstName = (isset($_SESSION['inputFirstName'])) ? $_SESSION['inputFirstName'] : '';
-$userPseudo = (isset($_SESSION['inputPseudo'])) ? $_SESSION['inputPseudo'] : '';
-$userEmail = (isset($_SESSION['inputMail'])) ? $_SESSION['inputMail'] : '';
+$userLastName = (isset($_SESSION['signupForm']['inputLastName'])) ? $_SESSION['signupForm']['inputLastName'] : '';
+$userFirstName = (isset($_SESSION['signupForm']['inputFirstName'])) ? $_SESSION['signupForm']['inputFirstName'] : '';
+$userPseudo = (isset($_SESSION['signupForm']['inputPseudo'])) ? $_SESSION['signupForm']['inputPseudo'] : '';
+$userEmail = (isset($_SESSION['signupForm']['inputMail'])) ? $_SESSION['signupForm']['inputMail'] : '';
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------
@@ -55,8 +57,8 @@ $userEmail = (isset($_SESSION['inputMail'])) ? $_SESSION['inputMail'] : '';
 				<div class="py-2 text-center">
 					<h1><strong>INSCRIPTION</strong></h1>
 					<!-- area pour afficher un message d erreur lors de la creation -->
-					<div class="show-bg <?=($_SESSION['showErrorSignup']) ? '' : 'visible'; ?> text-center mt-5">
-						<p class="lead mt-2"><span><?=$_SESSION['errorMsgSignUp']; ?></span></p>
+					<div class="show-bg <?=($_SESSION['error']['show']) ? '' : 'visible'; ?> text-center mt-5">
+						<p class="lead mt-2"><span><?=$_SESSION['error']['message'] ?></span></p>
 					</div>
 					<!-- /area pour afficher un message d erreur lors de la creation -->
 					<hr class="mb-1">

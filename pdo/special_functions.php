@@ -47,47 +47,67 @@ var_dump($check);
 */
 
 // --------------------------------------------------------------
-// FONCTION : Telechargement  des images
+// FONCTION : Verification des images
 // --------------------------------------------------------------
-function UploadImage($image) {
+function ValidateUpload($image) {
     // on initialise le tableau des erreurs
     $errors= array();
+    // on verifie si une image est envoyee
+    if ($image['name'] == '') {
+        return($errors);
+    }
     // initialisation des variables avec les informations du fichier uploade
+    $file_tmp = $image['tmp_name'];
+    $file_name = $image['name'];
+    $file_size = $image['size'];
+    $file_type = $image['type'];
+    $fileNameCmps = explode(".", $file_name);
+    $file_ext = strtolower(end($fileNameCmps)); // donne l extension de l image    
+    // dossier dans lequel l image sera deplacee
     $target_dir = "../img/news_feeds_pictures/";
-    $target_file = $target_dir . basename($image["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
     // on verifie si le fichier image est une vrai image ou une fausse image
-    $check = getimagesize($image["tmp_name"]);
+    $check = getimagesize($file_tmp);
     if($check == false) {
         $errors[]= "Le fichier n'est pas une image !";
         return($errors);
     }
-    // on verifie que le fichier image n existe pas deja
-    if (file_exists($target_file)) {
-        $errors[]=  "Le fichier existe déjà dans le dossier $target_file !";
-        return($errors);
-    }
     // on verifie la taille du fichier
-    if ($image["size"] > 2097152) {
+    if ($file_size > 2097152) {
         $errors[]= "Le fichier ne doit pas dépasser 2 MB !";
         return($errors);
     }    
     // extensions autorisees pour l upload des images
     $allowedImageExtensions= array("jpeg","jpg","png");
     // on verifie si l extension est valide
-    if (in_array($imageFileType, $allowedImageExtensions) === false){
+    if (in_array($file_ext, $allowedImageExtensions) === false){
         $errors[]= "Extension non autorisée, choisissez un fichier JPEG ou PNG !";
         return($errors);
-    }
-    // si aucune erreur : array vide
-    if(empty($errors) == true) {
-        move_uploaded_file($image["tmp_name"], $target_file);
-    } else {
-        $errors[] = "Erreur lors du déplacement du fichier vers le répertoire de téléchargement !";
-    }  
+    } 
 };
+
+// --------------------------------------------------------------
+// FONCTION : Telechargement  des images
+// --------------------------------------------------------------
+function UploadImage($image) {
+    // si aucune image n est envoyee la valeur pour l insert sera null et on affichera l image par defaut
+    if ($image['name'] == '') {
+        $newFileName = null;
+    } else {
+        // initialisation des variables avec les informations du fichier uploade
+        $file_tmp = $image['tmp_name'];
+        $file_name = $image['name'];
+        $fileNameCmps = explode(".", $file_name);
+        $file_ext = strtolower(end($fileNameCmps)); // donne l extension de l image
+        // on supprime les espaces et caracteres speciaux
+        $newFileName = md5(time() . $file_name) . '.' . $file_ext;
+        // dossier dans lequel l image sera deplacee
+        $target_dir = "../img/news_feeds_pictures/";
+        $dest_path = $target_dir . $newFileName;
+        // on deplace le fichier du repertoire temp a celui choisi
+        move_uploaded_file($file_tmp, $dest_path);        
+    }    
+    return $newFileName;
+}
 
 // --------------------------------------------------------------
 // FONCTION : Formatage de la date a afficher

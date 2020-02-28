@@ -10,14 +10,11 @@ require 'pdo/pdo_db_functions.php';
 // ----------------------------//---------------------------
 //                  variables de session
 // ---------------------------------------------------------
-// login en cours
-$currentSession = $_SESSION['current_Session'];
-// role de l utilisateur connecte
-$currentRole = $_SESSION['current_Role'];
-// recuperation de l identifiant de l utilisateur connecte
-$currentId = $_SESSION['current_Id'];
-// pseudo de l utilisateur connecte
-$curentPseudo = $_SESSION['current_Pseudo'];
+// ------------------//------------------------
+//      messages d erreur newsdetail
+$_SESSION['error']['page'] = 'selectedNews';
+//     messages d erreur newsdetail
+// ------------------//------------------------
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------

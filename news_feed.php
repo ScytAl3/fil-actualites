@@ -5,28 +5,24 @@ session_start ();
 if (isset($_SESSION['current_Session']) && $_SESSION['current_Session'] == false) {
     header('location:index.php');
 }
-// import du script pdo des fonctions sur la database
-require 'pdo/pdo_db_functions.php';
 // on place le cookie si l utilisateur a coche "remeber me" au login ou a l inscription
 if ($_SESSION['rememberMe']) {
     setUserCookie($_SESSION['current_Pseudo']);
 }
+// import du script pdo des fonctions sur la database
+require 'pdo/pdo_db_functions.php';
 // ----------------------------//---------------------------
 //                  variables de session
 // ---------------------------------------------------------
-// login en cours
-$currentSession = $_SESSION['current_Session'];
-// role de l utilisateur connecte
-$currentRole = $_SESSION['current_Role'];
-// recuperation de l identifiant de l utilisateur connecte
-$currentId = $_SESSION['current_Id'];
-// pseudo de l utilisateur connecte
-$curentPseudo = $_SESSION['current_Pseudo'];
-// on détruit les variables d erreur de login de notre session
-unset ($_SESSION['showErrorSignup'], $_SESSION['errorMsgSignUp']);
-// on détruit les variables d erreur d action de la page admin_news.php
-unset ($_SESSION['showErrorAction'], $_SESSION['errorMsgAction']);
-unset ($_SESSION['showErrorCreate'], $_SESSION['errorMsgCreate']);
+// ------------------//------------------------
+//      messages d erreur newsfeed
+$_SESSION['error']['show'] = ($_SESSION['error']['page'] != 'newsfeed') ? false : $_SESSION['error']['show'];
+$_SESSION['error']['message'] =  ($_SESSION['error']['page'] != 'newsfeed') ? '' : $_SESSION['error']['message'];
+$_SESSION['error']['page'] = 'newsfeed';
+//     messages d erreur newsfeed
+// ----------------------//------------------------
+// on détruit les variables inutiles des autres pages
+unset($_SESSION['createNews']);
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------
@@ -108,7 +104,7 @@ unset ($_SESSION['showErrorCreate'], $_SESSION['errorMsgCreate']);
                 <!-- affiche un message pour dire qu il n y a pas encore d actualite  -->
                 <div class="my-3 w-100">                                                                       
                     <div class="mx-auto px-3 py-2 text-center info-message-bg">
-                        <h2 class="card-title">Il n'y a aucune actualité pour l'instant !</h2>
+                        <h2 class="card-title">Il n'y a aucune actualité à afficher pour le moment !</h2>
                     </div>
                 </div> 
                 <!-- /affiche un message pour dire qu il n y a pas encore d actualite -->

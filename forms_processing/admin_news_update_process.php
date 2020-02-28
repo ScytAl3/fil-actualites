@@ -31,7 +31,7 @@
             // si la fonction ne revoie aucune erreur = photo deplacee dans le dossier img/        
             if (empty($pictureUpload) == true) {
                 $pictureName = $_FILES['fileToUpload']['name'];
-                // on recupere les informations saisies pour creer l article associe a l admin qui vient de le creer    
+                // on recupere le nom du fichier image et l identifiant de l article en cours   
                 $pictureData = [
                     $pictureName,
                     $articleId
@@ -41,24 +41,24 @@
                 // ----------------------------------------------------------------
                 $newPicture = updatePicture($pictureData);
             } else {
-                // on demarre une session avec les parametres de gestion d erreur de  l upload de l image
-                $_SESSION['showErrorCreate'] = true;
-                $_SESSION['errorMsgCreate'] = $userUpload[0];
-                // on redirige vers la page de creation article avec les parametres pour afficher le message d erreur
+                //  on renvoie une message d erreur upload image
+                $_SESSION['error']['show'] = true;
+                $_SESSION['error']['message'] = $userUpload[0];
+                // on redirige vers la page de creation article
                 header('location:/../admin_page/admin_news_edit.php');
                 exit;
             }     
         }           
         // on détruit les variables d erreurs liees au formulaire et celles des champs de saisie
-        unset ($_SESSION['showErrorUpdate'], $_SESSION['errorMsgUpdate'],);       
+        unset ($_SESSION['error']);       
         // on redirige vers la page de la liste des messagerie
         header('location:/../admin_page/admin_news.php');       
         exit;
     } else {
-        // on demarre une session avec les parametres de gestion d erreur de reception du formulaire
-        $_SESSION['showErrorUpdate'] = true;
-        $_SESSION['errorMsgUpdate'] = "Il y a eu un problème lors de l'envoi de votre formulaire !";
-        // on redirige vers la page de creation article avec les parametres pour afficher le message d erreur
+        //  on renvoie une message d erreur de reception du formulaire
+        $_SESSION['error']['show'] = true;
+        $_SESSION['error']['message'] = "Il y a eu un problème lors de l'envoi de votre formulaire !";
+        // on redirige vers la page de creation article
         header('location:/../admin_page/admin_news_edit.php');
         exit;
     }

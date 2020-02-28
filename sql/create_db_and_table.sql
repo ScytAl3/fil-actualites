@@ -92,12 +92,12 @@ INSERT INTO
 VALUES
     (1, 'celebration_01.jpg'),
     (1, 'celebration_02.jpg'),
-    (2, ''),
-    (3, ''),
+    (2, null),
+    (3, null),
     (4, 'concert_01.jpg'),
     (4, 'concert_02.jpg'),
     (4, 'concert_03.jpg'),
-    (5, ''),
+    (5, null),
     (6, 'seminar_01.jpg'),
     (6, 'seminar_02.jpg'),
-    (7, '');
+    (7, null);

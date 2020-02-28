@@ -10,17 +10,15 @@ require '../pdo/pdo_db_functions.php';
 // ----------------------------//---------------------------
 //                  variables de session
 // ---------------------------------------------------------
-// login en cours
-$currentSession = $_SESSION['current_Session'];
-// role de l utilisateur connecte
-$currentRole = $_SESSION['current_Role'];
-// recuperation de l identifiant de l utilisateur connecte
-$currentId = $_SESSION['current_Id'];
-// pseudo de l utilisateur connecte
-$curentPseudo = $_SESSION['current_Pseudo'];
-// message d erreur des actions
-$_SESSION['showErrorAction']  = (isset($_SESSION['showErrorAction'])) ? $_SESSION['showErrorAction'] : false;
-$_SESSION['errorMsgAction']  =  (isset($_SESSION['errorMsgAction'])) ? $_SESSION['errorMsgAction'] : '';
+// ----------------------//------------------------
+//      messages d erreur admin news list
+$_SESSION['error']['show'] = ($_SESSION['error']['page'] != 'adminNews') ? false : $_SESSION['error']['show'];
+$_SESSION['error']['message'] =  ($_SESSION['error']['page'] != 'adminNews') ? '' : $_SESSION['error']['message'];
+$_SESSION['error']['page'] = 'adminNews';
+//     messages d erreur admin news list
+// ----------------------//------------------------
+// on détruit les variables inutiles des autres pages
+unset($_SESSION['createNews']);
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------
@@ -59,14 +57,14 @@ $_SESSION['errorMsgAction']  =  (isset($_SESSION['errorMsgAction'])) ? $_SESSION
             <!-- message a l attention de l administrateur connecte -->
             <div class="my-3 w-100">                                                                       
                 <div class="mx-auto px-3 py-2 text-center info-message-bg">
-                    <h2 class="card-title">Gestion des actualités postées par l'adminstrateur <strong><em><?=$curentPseudo ?></em></strong></h2>
+                    <h2 class="card-title">Gestion des actualités postées par l'adminstrateur <strong><em><?=$_SESSION['current_Pseudo'] ?></em></strong></h2>
                 </div>
             </div> 
             <!-- /message a l attention de l administrateur connecte --> 
             <hr>
             <!-- area pour afficher un message d erreur lors de la creation -->
-            <div class="show-bg <?=($_SESSION['showErrorAction']) ? '' : 'visible'; ?> text-center mt-5">
-                <p class="lead mt-2"><span><?=$_SESSION['errorMsgAction']; ?></span></p>
+            <div class="show-bg <?=($_SESSION['error']['show']) ? '' : 'visible'; ?> text-center mt-5">
+                <p class="lead mt-2"><span><?=$_SESSION['error']['message'] ?></span></p>
             </div>
             <!-- /area pour afficher un message d erreur lors de la creation -->
            
@@ -80,7 +78,7 @@ $_SESSION['errorMsgAction']  =  (isset($_SESSION['errorMsgAction'])) ? $_SESSION
             ------------------------------------------------------------------------------>
                 <?php   
                     // on appelle la fonction qui retourne toutes les actualites
-                    $myNewsFeed = adminNewsReader($currentId);   
+                    $myNewsFeed = adminNewsReader($_SESSION['current_Id']);   
                     //
                     //var_dump($myNewsFeed); die;
                     //

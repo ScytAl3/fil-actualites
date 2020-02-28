@@ -10,15 +10,17 @@ require '../pdo/pdo_db_functions.php';
 // ----------------------------//---------------------------
 //                  variables de session
 // ---------------------------------------------------------
-// on détruit les variables d erreur d action de la page admin_news.php
-unset ($_SESSION['showErrorAction'], $_SESSION['errorMsgAction']);
-// message d erreur de creation
-$_SESSION['showErrorCreate']  = (isset($_SESSION['showErrorCreate'])) ? $_SESSION['showErrorCreate'] : false;
-$_SESSION['errorMsgCreate']  =  (isset($_SESSION['errorMsgCreate'])) ? $_SESSION['errorMsgCreate'] :'';
+// ----------------------//------------------------
+//      messages d erreur admin news list
+$_SESSION['error']['show'] = ($_SESSION['error']['page'] != 'adminNewsCreate') ? false : $_SESSION['error']['show'];
+$_SESSION['error']['message'] =  ($_SESSION['error']['page'] != 'adminNewsCreate') ? '' : $_SESSION['error']['message'];
+$_SESSION['error']['page'] = 'adminNewsCreate';
+//     messages d erreur admin news list
+// ----------------------//------------------------
 // recuperation des champs si le formulaire a ete envoye avec des erreurs
-$creaArticleTitle = (isset($_SESSION['inputCreaArticleTitle'])) ? $_SESSION['inputCreaArticleTitle'] : '';
-$creaArticleDescription = (isset($_SESSION['inputCreaArticleDescription'])) ? $_SESSION['inputCreaArticleDescription'] : '';
-$creaArticleBody = (isset($_SESSION['inputCreaArticleBody'])) ? $_SESSION['inputCreaArticleBody'] : '';
+$creaArticleTitle = (isset($_SESSION['createNews']['inputArticleTitle'])) ? $_SESSION['createNews']['inputArticleTitle'] : '';
+$creaArticleDescription = (isset($_SESSION['createNews']['inputArticleDescription'])) ? $_SESSION['createNews']['inputArticleDescription'] : '';
+$creaArticleBody = (isset($_SESSION['createNews']['inputArticleBody'])) ? $_SESSION['createNews']['inputArticleBody'] : '';
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------
@@ -58,8 +60,8 @@ $creaArticleBody = (isset($_SESSION['inputCreaArticleBody'])) ? $_SESSION['input
 				<div class="py-2 text-center">
 					<h1><strong>Création d'une actualité</strong></h1>
 					<!-- area pour afficher un message d erreur lors de la creation -->
-					<div class="show-bg <?=($_SESSION['showErrorCreate']) ? '' : 'visible'; ?> text-center mt-5">
-						<p class="lead mt-2"><span><?=$_SESSION['errorMsgCreate']; ?></span></p>
+					<div class="show-bg <?=($_SESSION['error']['show']) ? '' : 'visible'; ?> text-center mt-5">
+						<p class="lead mt-2"><span><?=$_SESSION['error']['message'] ?></span></p>
 					</div>
 					<!-- /area pour afficher un message d erreur lors de la creation -->
 					<hr class="mb-1">
@@ -74,15 +76,13 @@ $creaArticleBody = (isset($_SESSION['inputCreaArticleBody'])) ? $_SESSION['input
                     <!-- titre -->
 					<div class="mb-4">
 						<label for="articleTitle">Titre de l'article</label>
-						<input class="form-control" name="articleTitle" id="articleTitle" type="text" value="<?=$creaArticleTitle ?>" required
-							pattern="^[A-Za-z -]{1,255}$">
+						<input class="form-control" name="articleTitle" id="articleTitle" type="text" value="<?=$creaArticleTitle ?>" required>
                     </div>	
                     		
 					<!-- description -->
 					<div class="mb-4">
 						<label for="articleDescription">Description de l'article</label>
-						<input class="form-control" name="articleDescription" id="articleDescription" type="text" value="<?=$creaArticleDescription ?>" required
-							pattern="^[A-Za-z -]{1,255}$">
+						<input class="form-control" name="articleDescription" id="articleDescription" type="text" value="<?=$creaArticleDescription ?>" required>
                     </div>		
                     
                     <!-- corps -->

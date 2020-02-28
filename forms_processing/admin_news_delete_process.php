@@ -27,16 +27,16 @@
         $deleteArticle = deleteArticle($articleId);
     } else {
         // on demarre une session avec les parametres de gestion d erreur de de suppression
-        $_SESSION['showErrorAction'] = true;
-        $_SESSION['errorMsgAction'] = "Il y a eu un problème avec l'identifiant de l'article !";
+        $_SESSION['error']['show'] = true;
+        $_SESSION['error']['message'] = "Il y a eu un problème avec l'identifiant de l'article !";
         // on redirige vers la page des articles avec les parametres pour afficher le message d erreur
         header('location:/../admin_page/admin_news.php'); 
         exit;
     }
     // on renvoie les messages de la procedure de suppression
     session_start ();
-    $_SESSION['showErrorAction'] = true;
-    $_SESSION['errorMsgAction'] = $deletePicture." - ".$deleteArticle;
+    $_SESSION['error']['show'] = true;
+    $_SESSION['error']['message'] = $deletePicture." - ".$deleteArticle;
     // on redirige vers la page d administration des articles avec les parametres pour afficher le message
     header('location:/../admin_page/admin_news.php'); 
 
