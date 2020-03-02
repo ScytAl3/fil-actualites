@@ -2,7 +2,7 @@
 <?php
     // import pdo fonction sur la database
     require '../pdo/pdo_db_functions.php';
-    // on demarre une session la session
+    // on demarre une session
     session_start();
 
     // si le formulaire a ete envoyer les variables existes
@@ -54,7 +54,7 @@
                 // on renvoie un message de creation reussi
                 $_SESSION['error']['page'] = 'adminNews';
                 $_SESSION['error']['show'] = true;
-                $_SESSION['error']['message'] = 'Nouvel article crée.';
+                $_SESSION['error']['message'] = $newArticle.' - '.$newPicture;
                 // on détruit les variables d erreurs liees au formulaire et celles des champs de saisie - deux tableaux
                 unset ($_SESSION['createNews']);       
                 // on redirige vers la page de la liste des news de l admin connecte

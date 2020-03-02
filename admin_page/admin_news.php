@@ -12,13 +12,14 @@ require '../pdo/pdo_db_functions.php';
 // ---------------------------------------------------------
 // ----------------------//------------------------
 //      messages d erreur admin news list
+//$_SESSION['error']['page'] = (isset($_SESSION['error']['page'])) ? $_SESSION['error']['page'] : 'adminNews';
 $_SESSION['error']['show'] = ($_SESSION['error']['page'] != 'adminNews') ? false : $_SESSION['error']['show'];
 $_SESSION['error']['message'] =  ($_SESSION['error']['page'] != 'adminNews') ? '' : $_SESSION['error']['message'];
 $_SESSION['error']['page'] = 'adminNews';
 //     messages d erreur admin news list
 // ----------------------//------------------------
 // on détruit les variables inutiles des autres pages
-unset($_SESSION['createNews']);
+unset($_SESSION['createNews'], $_SESSION['updateNews']);
 // ----------------------------------------------------------
 //                  variables de session
 // ----------------------------//-----------------------------
@@ -117,7 +118,7 @@ unset($_SESSION['createNews']);
                 <!-- affiche un message pour dire qu il n y a pas encore d actualite  -->
                 <div class="my-3 w-100">                                                                       
                     <div class="mx-auto px-3 py-2 text-center info-message-bg">
-                        <h2 class="card-title">Vous n'avez posé aucune actualité  !</h2>
+                        <h2 class="card-title">Vous n'avez posté aucune actualité  !</h2>
                     </div>
                 </div> 
                 <!-- /affiche un message pour dire qu il n y a pas encore d actualite -->

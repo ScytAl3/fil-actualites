@@ -371,7 +371,7 @@ function updateArticle($arrayArticle) {
         // execution de la requete
         $statement -> execute($arrayArticle); 
         $statement -> closeCursor();  
-        $msg =  "'Données de l'article modifiées !";
+        $msg =  "Données de l'article modifiées !";
     } catch(PDOException $ex) {     
         $msg = 'ERREUR PDO delete...' . $e->getMessage();     
         $statement = null;
@@ -393,7 +393,7 @@ function updatePicture($arrayPicture) {
     $pdo = my_pdo_connexxion();
     // preparation de la  requete preparee pour mettre a jour les informations
     $sql = "UPDATE `pictures` SET `pictureFilename` = ?";
-    $where = " WHERE articlesId = ? AND pictureFilename = ''";
+    $where = " WHERE articlesId = ?";
     // construction de la requete
     $query = $sql.$where;
     // preparation de l execution de la requete
@@ -402,7 +402,7 @@ function updatePicture($arrayPicture) {
         // execution de la requete
         $statement -> execute($arrayPicture); 
         $statement -> closeCursor();  
-        $msg =  "'Données de l'image modifiées !";
+        $msg =  "Données de l'image modifiées !";
     } catch(PDOException $ex) {     
         $msg = 'ERREUR PDO delete...' . $e->getMessage();     
         $statement = null;

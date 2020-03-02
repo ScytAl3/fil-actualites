@@ -5,19 +5,20 @@ session_start ();
 if (isset($_SESSION['current_Session']) && $_SESSION['current_Session'] == false) {
     header('location:index.php');
 }
+// import du script pdo des fonctions sur la database
+require 'pdo/pdo_db_functions.php';
 // on place le cookie si l utilisateur a coche "remeber me" au login ou a l inscription
 if ($_SESSION['rememberMe']) {
     setUserCookie($_SESSION['current_Pseudo']);
 }
-// import du script pdo des fonctions sur la database
-require 'pdo/pdo_db_functions.php';
 // ----------------------------//---------------------------
 //                  variables de session
 // ---------------------------------------------------------
 // ------------------//------------------------
 //      messages d erreur newsfeed
-$_SESSION['error']['show'] = ($_SESSION['error']['page'] != 'newsfeed') ? false : $_SESSION['error']['show'];
-$_SESSION['error']['message'] =  ($_SESSION['error']['page'] != 'newsfeed') ? '' : $_SESSION['error']['message'];
+$_SESSION['error']['page'] = (isset($_SESSION['error']['page'])) ? $_SESSION['error']['page'] : 'newsfeed';
+$_SESSION['error']['show'] = ((isset($_SESSION['error']['show'])) && ($_SESSION['error']['page'] =='newsfeed')) ? $_SESSION['error']['show'] : false;
+$_SESSION['error']['message'] = ((isset($_SESSION['error']['message'])) && ($_SESSION['error']['page'] =='newsfeed')) ? $_SESSION['error']['message'] :  '';
 $_SESSION['error']['page'] = 'newsfeed';
 //     messages d erreur newsfeed
 // ----------------------//------------------------
