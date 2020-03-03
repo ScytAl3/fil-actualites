@@ -17,22 +17,26 @@ $_SESSION['error']['message'] =  ($_SESSION['error']['page'] != 'adminNewsUpdate
 $_SESSION['error']['page'] = 'adminNewsUpdate';
 //     messages d erreur admin news list
 // ----------------------//------------------------
+// ----------------------------------------------------------
+//                  variables de session
+// ----------------------------//-----------------------------
+
 //  --------------------------------------------------//------------------------------------------------
 //  debut script php pour recuperer toutes les informations de l actualite selectionnee
 //  ----------------------------------------------------------------------------------------------------
-	// on recupere l identifiant de l article
-	$articleId = (isset($_SESSION['updateNews']['inputArticleId'])) ? $_SESSION['updateNews']['inputArticleId'] : $_GET['articleId'];
-	// on appelle la fonction qui retourne toutes les informations
-	$myNews = newsInfoReader($articleId);   
-	//
-	//var_dump($myNews); die;
-	//
-	// si la requete retourne un objet
-	if ($myNews) {
-		$articleTitle = $myNews['articlesTitle'];
-		$articleDescription = $myNews['articlesDescription'];
-		$articleBody = $myNews['articlesBody'];
-	}
+// on recupere l identifiant de l article
+$articleId = (isset($_SESSION['updateNews']['inputArticleId'])) ? $_SESSION['updateNews']['inputArticleId'] : $_GET['articleId'];
+// on appelle la fonction qui retourne toutes les informations
+$myNews = newsInfoReader($articleId);   
+//
+//var_dump($myNews); die;
+//
+// si la requete retourne un objet
+if ($myNews) {
+	$articleTitle = $myNews['articlesTitle'];
+	$articleDescription = $myNews['articlesDescription'];
+	$articleBody = $myNews['articlesBody'];
+}
 // recuperation des valeurs existantes à modifier ou des champs saisis si le formulaire a ete envoye avec des erreurs
 $updateArticleTitle = (isset($_SESSION['updateNews']['inputArticleTitle'])) ? $_SESSION['updateNews']['inputArticleTitle'] : $articleTitle;
 $updateArticleDescription = (isset($_SESSION['updateNews']['inputArticleDescription'])) ? $_SESSION['updateNews']['inputArticleDescription'] : $articleDescription;

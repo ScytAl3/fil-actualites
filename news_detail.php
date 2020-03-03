@@ -60,9 +60,9 @@ $_SESSION['error']['page'] = 'selectedNews';
                     debut script php pour recuperer toutes les actualites
             ------------------------------------------------------------------------------>
             <?php   
-                //--------------------------------------------------------------------
-                // on appelle la fonction qui retourne toutes les actualites
-                //--------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
+                // on appelle la fonction qui retourne les informations de l actualite
+                //----------------------------------------------------------------------------------
                 $newsDetail = newsReader($_GET['newsId']);   
                 //
                 //var_dump($newsDetail); die;
